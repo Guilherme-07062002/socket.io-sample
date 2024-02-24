@@ -1,14 +1,21 @@
+import { Server } from 'socket.io';
 import express from 'express';
 import http from 'http';
 
 const app = express();
 const server = http.createServer(app);
 
-app.get('/', (req, res) => {
-  const response = JSON.stringify({
-    message: 'Hello World'
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
-  res.send(response);
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
 server.listen(3000, () => {
