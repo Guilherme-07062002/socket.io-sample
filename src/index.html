@@ -7,9 +7,19 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
+
+      function clickButton() {
+        console.log("Button was clicked");
+        socket.emit("click button", "Button was clicked");
+      }
+
+      socket.on("click button", (data) => {
+        console.log(`received: ${data}`);
+      });
     </script>
   </head>
   <body>
-    Socket.io
+    <p>Socket.io</p>
+    <button onclick="clickButton()">Click me</button>
   </body>
 </html>

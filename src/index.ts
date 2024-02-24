@@ -7,9 +7,15 @@ const server = http.createServer(app);
 
 const io = new Server(server);
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log('a user connected');
+
+  socket.on('click button', async (data) => {
+    console.log(`server received: ${data}`);
+    io.emit('click button', data);
+  })
 });
+
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
